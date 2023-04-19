@@ -1,15 +1,25 @@
 import { Dimensions, StyleSheet } from "react-native";
 
-const width = Dimensions.get('window').width * .95;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    paddingHorizontal: 20,
   },
   maxWidth: {
-    width: width,
+    // width: width,
+    alignSelf: "stretch",
+    width: "100%",
+    flexDirection: "column"
+  },
+  containerInner: {
+    flex: 1,
+    width: "100%",
+    alignSelf: "stretch",
+    paddingHorizontal: 20,
+    paddingVertical: 10
   },
   containerH: {
     flexDirection: "column",

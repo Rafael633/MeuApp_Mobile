@@ -65,9 +65,9 @@ export default function LoginScreen({ navigation }) {
     <View style={styles.container}>
       <Paragraph>Faça o seu Login</Paragraph>
       <HelperText type="error"> {error} </HelperText>
-      <View>
+      <View style={styles.maxWidth}>
         <Paragraph>E-mail</Paragraph>
-        <View>
+
           <TextInput
             mode="outlined"
             placeholder="Digite seu e-mail"
@@ -75,9 +75,8 @@ export default function LoginScreen({ navigation }) {
             onChangeText={setEmail}
             style={styles.maxWidth}
           />
-        </View>
       </View>
-      <View>
+      <View style={styles.maxWidth}>
         <Paragraph>Senha</Paragraph>
         <TextInput
           mode="outlined"

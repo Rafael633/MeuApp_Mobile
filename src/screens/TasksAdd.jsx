@@ -1,64 +1,55 @@
-import { useState } from "react";
-import { View } from "react-native";
-import { TextInput, Button, ActivityIndicator } from "react-native-paper";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { View } from "react-native-web";
+import { addDoc, collection, getFirestore } from "firebase/firestore";
 import { app } from "../config/firebase";
-import styles from "../utils/styles";
-import Icon from "@expo/vector-icons/FontAwesome";
+import { Text, TextInput } from "react-native-paper";
+import { useState } from "react";
 
-// Create a reference to the 'tarefas' collection
-const tarefasRef = collection(getFirestore(app), "tarefas");
+const tarefas = collection(
+  getFirestore(app), "tarefas"
+);
 
 export default function TasksAdd() {
-  const [taskName, setTaskName] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [task, setTask] = useState("");
 
-  const saveTask = (task) => {
-    setLoading(true);
-    addDoc(tarefasRef, task)
+  function saveTask(newTask) {
+    console.log("Salvando tarefa", newTask);
+    addDoc(tarefas, {
+      titulo: newTask,
+      concluida: false,
+    })
       .then((docRef) => {
-        console.log("Task saved with ID: ", docRef.id);
+        console.log("Tarefa salva com sucesso", docRef.id);
       })
       .catch((error) => {
-        console.error("Error saving task: ", error);
+        console.log("Erro ao salvar tarefa", error);
       })
-      .finally(() => {
-        setLoading(false);
-      });
-  };
+  }
 
-  const handleAddTask = () => {
-    if (taskName?.trim()) {
-      const task = { name: taskName.trim(), completed: false };
+  function handleAddTask() {
+    console.log("Adicionando tarefa");
+    if (task.trim() != "") {
       saveTask(task);
-      setTaskName("");
     }
-  };
+  }
 
   return (
-    <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+    <View>
+      <Text>Adicionar tarefa</Text>
       <TextInput
+        label="Adicionar tarefa"
         mode="flat"
-        label="Task name"
-        value={taskName}
-        onChangeText={setTaskName}
-        style={{ flex: 1 }}
-        iconColor="#22C55E"
+        value={task}
+        onChangeText={setTask}
         right={
           <TextInput.Icon
-            iconColor="purple"
-            containerColor="#CCC"
-            color="red"
-            size={20}
-            underlayColor="green"
             icon="plus"
-            onPress={handleAddTask}
+            size={20}
             style={{ marginRight: 10 }}
+            containerColor="lightgray"
+            onPress={handleAddTask}
           />
         }
       />
-
-      {loading && <ActivityIndicator />}
     </View>
-  );
+  )
 }

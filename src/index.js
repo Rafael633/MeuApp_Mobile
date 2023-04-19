@@ -9,6 +9,7 @@ import RegisterScreen from "./screens/RegisterScreen";
 import SignOut from "./screens/SignOut";
 import { SplashScreen } from "./screens/SplashScreen";
 import Tasks from "./screens/Tasks";
+
 import TasksAdd from "./screens/TasksAdd";
 import TasksList from "./screens/TasksList";
 
