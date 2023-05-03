@@ -9,9 +9,11 @@ import RegisterScreen from "./screens/RegisterScreen";
 import SignOut from "./screens/SignOut";
 import { SplashScreen } from "./screens/SplashScreen";
 import Tasks from "./screens/Tasks";
+import AulaTasksAdicionar from "./screens/AulaTaskAdicionar";
+import AulaTaskListar from "./screens/AulaTaskListar";
 
-import TasksAdd from "./screens/TasksAdd";
-import TasksList from "./screens/TasksList";
+// import TasksAdd from "./screens/TasksAdd";
+// import TasksList from "./screens/TasksList";
 
 const Stack = createNativeStackNavigator();
 
@@ -90,6 +92,22 @@ export function MBTNavigation() {
         options={{
           title: "Tarefas",
           tabBarIcon: "phone-in-talk",
+        }}
+      />
+      <MTB.Screen
+        name="TasksAdicionar"
+        component={AulaTasksAdicionar}
+        options={{
+          title: "Add Tarefas",
+          tabBarIcon: "plus-circle",
+        }}
+      />
+      <MTB.Screen
+        name="TasksListar"
+        component={AulaTaskListar}
+        options={{
+          title: "Lista Tarefas",
+          tabBarIcon: "format-list-bulleted",
         }}
       />
       {/* <MTB.Screen
