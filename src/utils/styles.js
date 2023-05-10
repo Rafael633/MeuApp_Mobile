@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
 
 const styles = StyleSheet.create({
@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   maxWidth: {
-    // width: width,
     alignSelf: "stretch",
     width: "100%",
     flexDirection: "column"
