@@ -9,6 +9,7 @@ import SignOut from "./screens/SignOut";
 import { SplashScreen } from "./screens/SplashScreen";
 import AulaTasksAdicionar from "./screens/AulaTaskAdicionar";
 import AulaTaskListar from "./screens/AulaTaskListar";
+import UserProfile from "./screens/UserProfile";
 
 // import TasksAdd from "./screens/TasksAdd";
 // import TasksList from "./screens/TasksList";
@@ -58,7 +59,13 @@ const MTB = createMaterialBottomTabNavigator();
 
 export function MBTNavigation() {
   return (
-    <MTB.Navigator>
+    <MTB.Navigator
+      tabBarOptions={{
+        activeTintColor: "#fff",
+        labelStyle: { fontSize: 8, fontWeight: "bold" },
+
+      }}
+    >
       <MTB.Screen
         name="HomeScreen"
         component={HomeScreen}
@@ -92,22 +99,14 @@ export function MBTNavigation() {
           tabBarIcon: "format-list-bulleted",
         }}
       />
-      {/* <MTB.Screen
-        name="TasksAdd"
-        component={TasksAdd}
+      <MTB.Screen
+        name="ProfileScreen"
+        component={UserProfile}
         options={{
-          title: "+ Tarefa",
-          tabBarIcon: "checkbox-marked-circle-plus-outline",
+          title: "Perfil",
+          tabBarIcon: "account-circle",
         }}
       />
-      <MTB.Screen
-        name="TasksList"
-        component={TasksList}
-        options={{
-          title: "Tarefas",
-          tabBarIcon: "checkbox-marked-circle-plus-outline",
-        }}
-      /> */}
       <MTB.Screen
         name="LogoutScreen"
         component={SignOut}

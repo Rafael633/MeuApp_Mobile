@@ -3,7 +3,7 @@ import styles from "../utils/styles";
 import { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../config/firebase";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function HomeScreen() {
@@ -35,34 +35,37 @@ export default function HomeScreen() {
     // se não houver usuário logado, não faz nada
     if (!user?.userUID) return
 
-    // selecionar a coleção de usuários
-    const usuariosRef = collection(db, "usuarios");
-
-    // começa a construção da query
-    const q = query(
-      // Primeiro parâmetro é o nome da coleção
-      usuariosRef,
-      // Segundo parâmetro é a cláusula where
-      where("userUID", "==", user.userUID)
-    );
-
-    // executa a query
-    getDocs(q)
-      // resolve a promessa
-      .then((querySnapshot) => {
-        // se tiver vazio, não faz nada
-        if (querySnapshot.empty) return
-
-        // se tiver algum documento, pega o primeiro
-        const usuario = querySnapshot.docs[0].data();
-
-        // seta o usuário na variável de estado user
-        setUser(usuario)
-
-        AsyncStorage.setItem("usuario", JSON.stringify(usuario))
-          .then(() => console.log("Usuário salvo no AsyncStorage"))
-
+    // se houver usuário logado, 
+    // busca os dados dele no banco de dados
+    const docRef = doc(db, "usuarios", user.userUID);
+    // busca os dados do usuário no banco de dados
+    const docSnap = getDoc(docRef)
+      // se a busca for bem sucedida, seta os dados do usuário na variável de estado user
+      .then((docSnap) => {
+        // se o documento existir
+        if (docSnap.exists()) {
+          // seta os dados do usuário na variável de estado user
+          const usuario = {
+            ...docSnap.data(),
+            userUID: user.userUID
+          }
+          // seta os dados do usuário na variável de estado user
+          setUser(usuario);
+          // salva os dados do usuário no AsyncStorage
+          AsyncStorage.setItem(
+            "usuario",
+            JSON.stringify(usuario))
+            .then(
+              () => console.log("Usuário salvo no AsyncStorage")
+            )
+        } else {
+          console.log("Não encontrei o usuário!");
+        }
       })
+      .catch((error) => {
+        console.log("Problemas ao recuperar o usuário:", error);
+      });
+
 
     // este colchete escuta a variável user.userUID
   }, [user?.userUID]);

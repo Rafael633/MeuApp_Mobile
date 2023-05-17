@@ -1,4 +1,4 @@
-import { View } from "react-native-web";
+import { View } from "react-native";
 import { addDoc, collection, getFirestore } from "firebase/firestore";
 import { app } from "../config/firebase";
 import { Text, TextInput } from "react-native-paper";

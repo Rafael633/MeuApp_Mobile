@@ -1,5 +1,5 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { useState } from "react";
 import { ScrollView, View } from "react-native";
 import { Button, HelperText, TextInput } from "react-native-paper";
@@ -72,7 +72,7 @@ export default function RegisterScreen() {
         const userUID = userCredential.user.uid;
 
         // selecionar a coleção "tabela" que vamos trabalhar
-        const collectionRef = collection(db, "usuarios");
+        const collectionRef = doc(db, "usuarios", userUID);
 
         const dadosParaInserir = {
           nomeDaPessoa: nome,
@@ -87,9 +87,9 @@ export default function RegisterScreen() {
         }
 
         // faço a inserção dos dados na tabela "usuarios"
-        const docRef = addDoc(collectionRef, dadosParaInserir)
+        const docRef = setDoc(collectionRef, dadosParaInserir)
           .then((docRef) => {
-            console.log("Documento inserido com sucesso: ", docRef.id);
+            console.log("Documento inserido com sucesso: ", docRef);
             navigation.navigate("LoginScreen");
           })
           .catch((error) => {

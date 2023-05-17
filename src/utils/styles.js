@@ -35,6 +35,10 @@ const styles = StyleSheet.create({
     minWidth: 300,
     height: 300,
   },
+  textCenter: {
+    textAlign: "center",
+
+  }
 });
 
 export default styles;
